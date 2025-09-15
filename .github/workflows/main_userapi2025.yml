@@ -52,5 +52,6 @@ jobs:
         with:
           app-name: 'UserApi2025'
           slot-name: 'Production'
-          package: .
+          package: ./published
+
 
