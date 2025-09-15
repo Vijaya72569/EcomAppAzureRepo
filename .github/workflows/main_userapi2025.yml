@@ -4,14 +4,13 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'UserApplication/**'   # only run if UserApplication code changes
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: windows-latest
-    permissions:
-      contents: read # Required for actions/checkout
-
     steps:
       - uses: actions/checkout@v4
 
@@ -20,34 +19,36 @@ jobs:
         with:
           dotnet-version: '8.x'
 
-      - name: Build with dotnet
+      - name: Build User API
         run: dotnet build UserApplication/UserApplication.csproj --configuration Release
 
-      - name: dotnet publish
+      - name: Publish User API
         run: dotnet publish UserApplication/UserApplication.csproj -c Release -o "${{env.DOTNET_ROOT}}/myapp"
 
-      - name: Upload artifact for deployment job
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: .net-app
+          name: userapi-app
           path: ${{env.DOTNET_ROOT}}/myapp
 
   deploy:
     runs-on: windows-latest
     needs: build
-    permissions:
-      id-token: write
-      contents: read
-
     steps:
-      - name: Download artifact from build job
-        uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v4
         with:
-          name: .net-app
+          name: userapi-app
       
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_010DA4855C5140AFB6A2186C74415A66 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_BA79C28E542A4A48B157E63A8159DED2 }}
-          subscripti
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_USER }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'UserApi2025'
+          slot-name: 'Production'
+          package: .
