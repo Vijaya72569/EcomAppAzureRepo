@@ -2,19 +2,21 @@ name: Build and deploy ASP.Net Core app to Azure Web App - UserApi2025
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
     paths:
       - 'UserApplication/**'
   workflow_dispatch:
 
 permissions:
-  contents: read   # do NOT request id-token here (we're using client-secret)
+  contents: read   # Required for checkout; no id-token needed
 
 jobs:
   build:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Set up .NET
         uses: actions/setup-dotnet@v4
@@ -43,13 +45,18 @@ jobs:
           name: userapi-app
           path: ./published
 
-      - name: Azure Login (service principal + secret)
+      - name: Azure Login using Service Principal + Secret
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+          creds: |
+            {
+              "clientId": "${{ secrets.AZURE_CLIENT_ID }}",
+              "clientSecret": "${{ secrets.AZURE_CLIENT_SECRET }}",
+              "subscriptionId": "${{ secrets.AZURE_SUBSCRIPTION_ID }}",
+              "tenantId": "${{ secrets.AZURE_TENANT_ID }}",
+              "activeDirectoryEndpointUrl": "https://login.microsoftonline.com",
+              "resourceManagerEndpointUrl": "https://management.azure.com/"
+            }
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
@@ -57,4 +64,3 @@ jobs:
           app-name: 'UserApi2025'
           slot-name: 'Production'
           package: ./published
-
