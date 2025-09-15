@@ -1,0 +1,41 @@
+############################
+# .NET Core / ASP.NET
+############################
+bin/
+obj/
+*.dll
+*.exe
+*.log
+*.cache
+*.pdb
+*.user
+*.vs/
+*.vscode/
+
+# Publish folders
+**/Properties/PublishProfiles/
+**/wwwroot/
+
+############################
+# Angular / Node
+############################
+AngularApp/node_modules/
+AngularApp/dist/
+AngularApp/.angular/cache/
+AngularApp/package-lock.json
+AngularApp/npm-debug.log*
+AngularApp/yarn-debug.log*
+AngularApp/yarn-error.log*
+
+############################
+# OS-specific
+############################
+Thumbs.db
+.DS_Store
+
+############################
+# Environment / Secrets
+############################
+*.env
+*.env.local
+appsettings.Development.json
