@@ -2,11 +2,13 @@ name: Build and deploy ASP.Net Core app to Azure Web App - UserApi2025
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
     paths:
       - 'UserApplication/**'
   workflow_dispatch:
+
+permissions:
+  contents: read   # do NOT request id-token here (we're using client-secret)
 
 jobs:
   build:
@@ -14,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up .NET Core
+      - name: Set up .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '8.x'
@@ -35,11 +37,13 @@ jobs:
     runs-on: windows-latest
     needs: build
     steps:
-      - uses: actions/download-artifact@v4
+      - name: Download artifact
+        uses: actions/download-artifact@v4
         with:
           name: userapi-app
-      
-      - name: Azure Login
+          path: ./published
+
+      - name: Azure Login (service principal + secret)
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
@@ -52,5 +56,4 @@ jobs:
         with:
           app-name: 'UserApi2025'
           slot-name: 'Production'
-          package: .
-
+          package: ./published
