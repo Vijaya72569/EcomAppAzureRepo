@@ -6,7 +6,7 @@ name: Build and deploy ASP.Net Core app to Azure Web App - OrderApi2025
 on:
   push:
     branches:
-      - main
+     - 'OrderWebApi/**'
   workflow_dispatch:
 
 jobs:
@@ -61,5 +61,6 @@ jobs:
         with:
           app-name: 'OrderApi2025'
           slot-name: 'Production'
-          package: .
+          package: ./published
+
           
