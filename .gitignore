@@ -17,15 +17,20 @@ obj/
 **/wwwroot/
 
 ############################
-# Angular / Node
+# Angular / Node (EcomApp)
 ############################
-AngularApp/node_modules/
-AngularApp/dist/
-AngularApp/.angular/cache/
-AngularApp/package-lock.json
-AngularApp/npm-debug.log*
-AngularApp/yarn-debug.log*
-AngularApp/yarn-error.log*
+EcomApp/node_modules/
+EcomApp/dist/
+EcomApp/.angular/cache/
+EcomApp/npm-debug.log*
+EcomApp/yarn-debug.log*
+EcomApp/yarn-error.log*
+
+# Keep important Angular files
+!EcomApp/package.json
+!EcomApp/angular.json
+!EcomApp/tsconfig*.json
+!EcomApp/src/
 
 ############################
 # OS-specific
