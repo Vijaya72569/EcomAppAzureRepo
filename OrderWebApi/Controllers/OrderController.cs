@@ -23,7 +23,7 @@ namespace OrderWebApi.Controllers
                 return BadRequest(new { message = "Invalid order data" });
             //add this for userwebapi for username
 
-            var userApiUrl = $"http://localhost:5001/api/users/{order.UserId}"; // replace with actual User API URL
+            var userApiUrl = $"https://userapi2025-awb0btfkgug2gnaq.canadacentral-01.azurewebsites.net/api/users/{order.UserId}"; // replace with actual User API URL
             var response = await _httpClient.GetAsync(userApiUrl);
 
             if (!response.IsSuccessStatusCode)
