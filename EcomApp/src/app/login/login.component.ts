@@ -37,7 +37,7 @@ login() {
 
   const loginData = { email: this.email, password: this.password };
 
-  this.http.post<any>('http://localhost:5001/api/users/login', loginData)
+  this.http.post<any>('https://userapi2025-awb0btfkgug2gnaq.canadacentral-01.azurewebsites.net/api/users/login', loginData)
     .subscribe({
       next: (res) => {
         this.auth.login(res.user);
