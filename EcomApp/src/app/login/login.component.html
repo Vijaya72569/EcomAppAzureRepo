@@ -1,0 +1,16 @@
+<p>login works!</p>
+
+<h2>Login</h2>
+<div>
+  <input type="email" [(ngModel)]="email" placeholder="Email"><br>
+  <input type="password" [(ngModel)]="password" placeholder="Password"><br>
+ 
+  <button (click)="login()">Login</button>
+   <button type="button" (click)="signin()">Signin</button>
+
+  <!---
+  <button (click)="login()" [disabled]="!email || !password">Login</button>
+-->
+  <p style="color:red">{{ errorMessage }}</p>
+</div>
+

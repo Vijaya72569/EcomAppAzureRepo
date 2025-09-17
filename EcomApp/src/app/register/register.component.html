@@ -1,0 +1,17 @@
+<p>register works!</p>
+
+<h2>User Registration</h2>
+<form #form="ngForm" (ngSubmit)="Register()" novalidate>
+    <label>FullName:</label>
+    <input type="text" [(ngModel)]="fullName" name="fullName" required /><br><br>
+
+    <label>Email:</label>
+    <input type="email" [(ngModel)]="email" name="email" required /><br><br>
+
+    <label>Password:</label>
+    <input type="password" [(ngModel)]="password" name="password" required /><br><br>
+ <button type="submit" [disabled]="!form.valid">Register</button>
+
+</form>
+<p *ngIf="message">{{message}}</p>
+

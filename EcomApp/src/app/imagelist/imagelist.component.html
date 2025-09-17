@@ -1,0 +1,12 @@
+<p>imagelist works!</p>
+<h2>Image Gallery</h2>
+<div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+  <div *ngFor="let image of images" style="border: 1px solid #ccc; padding: 1rem;">
+    <img [src]="image.url" width="150" height="150">
+    <p>Price: ₹{{ image.price }}</p>
+    <button (click)="addToCart(image)">Add to Cart</button>
+  <!---
+    <button (click)="deleteImage(image.id)">Delete</button>
+  --> 
+</div>
+</div>
