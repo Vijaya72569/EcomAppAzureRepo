@@ -16,7 +16,7 @@ fullName="";
 
   Register(){
     const RegisterData = {fullName:this.fullName, email: this.email, password: this.password };
-  this.http.post<any>('http://localhost:5001/api/users/register', RegisterData)
+  this.http.post<any>('https://userapi2025-awb0btfkgug2gnaq.canadacentral-01.azurewebsites.net/api/users/register', RegisterData)
     .subscribe({
       next: (res) => {
        this.message="Register successfull"
