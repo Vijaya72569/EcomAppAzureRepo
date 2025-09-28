@@ -11,11 +11,12 @@ const routes: Routes = [
   { path: 'cart', component: CartComponent }
    */
 
-   { path: '', component: LoginComponent },
-   { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent },
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'imagelist', component: ImagelistComponent, canActivate: [AuthGuard] },
-  { path: 'cart', component: CartComponent, canActivate: [AuthGuard] }
+  { path: 'cart', component: CartComponent, canActivate: [AuthGuard] },
+  { path: '**', redirectTo: '/login' }  // fallback for unknown routes
 ];
 
 @NgModule({
